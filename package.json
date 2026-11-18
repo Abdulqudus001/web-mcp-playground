@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^15.0.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"
@@ -17,6 +18,7 @@
     "@vitejs/plugin-vue": "^6.0.1",
     "typescript": "~5.9.3",
     "vite": "^7.1.12",
-    "vue-tsc": "^3.1.2"
+    "vue-tsc": "^3.1.2",
+    "webmcp-types": "^0.1.11"
   }
 }

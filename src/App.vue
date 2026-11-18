@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { watch } from 'vue'
+import { useSearchProductsTool } from './composables/useSearchProductsTool'
 import { useShopStore } from './stores/shop'
 
 const shop = useShopStore()
+useSearchProductsTool()
 
 watch(
   () => shop.notice,

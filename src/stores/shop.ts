@@ -200,6 +200,37 @@ export const useShopStore = defineStore('shop', () => {
     return { count: products.length, filters: filters.value }
   }
 
+  /** Read-only catalog search for WebMCP — does not change UI filters. */
+  function searchProducts(input: { query?: unknown; category?: unknown } = {}) {
+    const query = typeof input.query === 'string' ? input.query : ''
+    let category: Category | null = null
+    if (typeof input.category === 'string' && input.category.trim()) {
+      category = canonical(input.category, categories)
+      if (!category) {
+        return { error: `Unknown category "${input.category}".`, categories: [...categories] }
+      }
+    }
+    const current: Filters = {
+      query,
+      category,
+      maxPrice: null,
+      color: null,
+      sort: 'featured',
+    }
+    const results = products
+      .filter((product) => matches(product, current))
+      .map((product) => ({
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        blurb: product.blurb,
+        colors: product.colors.map((color) => color.name),
+        sizes: product.sizes,
+      }))
+    return { count: results.length, query, category, products: results }
+  }
+
   function addToCart(input: {
     product?: unknown
     color?: unknown
@@ -396,6 +427,7 @@ export const useShopStore = defineStore('shop', () => {
     discount,
     total,
     clearFilters,
+    searchProducts,
     addToCart,
     updateQuantity,
     removeFromCart,
